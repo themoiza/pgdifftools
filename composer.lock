@@ -1,0 +1,59 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "72a60af827477e3c3cd7c3aa992e8eae",
+    "packages": [
+        {
+            "name": "the.moiza/mvc-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/themoiza/mvc-core.git",
+                "reference": "7e62528b81eeaeeca977b0204f0efa8415831cd4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/themoiza/mvc-core/zipball/7e62528b81eeaeeca977b0204f0efa8415831cd4",
+                "reference": "7e62528b81eeaeeca977b0204f0efa8415831cd4",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TheMoiza\\MvcCore\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Moisés de Lima",
+                    "email": "the.moiza@gmail.com"
+                }
+            ],
+            "description": "Simple PHP MVC Core",
+            "support": {
+                "issues": "https://github.com/themoiza/mvc-core/issues",
+                "source": "https://github.com/themoiza/mvc-core/tree/v1.0.0"
+            },
+            "time": "2022-07-13T18:44:05+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "the.moiza/mvc-core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
+}

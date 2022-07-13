@@ -1,0 +1,15 @@
+{
+    "name": "the.moiza/pgdifftools",
+    "description": "Postgresql diff tools",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Moisés de Lima",
+            "email": "the.moiza@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "the.moiza/mvc-core": "dev-master"
+    }
+}
