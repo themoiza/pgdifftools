@@ -39,6 +39,7 @@ class De{
 	}
 }
 
-Router::get('/', \App\Controller\IndexController::class, 'index');
+Router::get('/', \App\Controllers\IndexController::class, 'index');
+Router::get('/pg-match', \App\Controllers\PgMatchController::class, 'index');
 
 Router::init();

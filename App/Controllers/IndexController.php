@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
 
 use TheMoiza\MvcCore\Core\View;
 
@@ -10,6 +10,6 @@ class IndexController{
 
 	public function index(){
 
-		Response::send(View::load('index', []));
+		Response::send(View::load('layout', 'index', []));
 	}
 }

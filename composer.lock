@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/themoiza/mvc-core.git",
-                "reference": "7e62528b81eeaeeca977b0204f0efa8415831cd4"
+                "reference": "8ebbb5e8f817e2430cb981751bc222d3c6182767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/themoiza/mvc-core/zipball/7e62528b81eeaeeca977b0204f0efa8415831cd4",
-                "reference": "7e62528b81eeaeeca977b0204f0efa8415831cd4",
+                "url": "https://api.github.com/repos/themoiza/mvc-core/zipball/8ebbb5e8f817e2430cb981751bc222d3c6182767",
+                "reference": "8ebbb5e8f817e2430cb981751bc222d3c6182767",
                 "shasum": ""
             },
             "default-branch": true,
@@ -42,7 +42,7 @@
                 "issues": "https://github.com/themoiza/mvc-core/issues",
                 "source": "https://github.com/themoiza/mvc-core/tree/v1.0.0"
             },
-            "time": "2022-07-13T18:44:05+00:00"
+            "time": "2022-07-13T20:39:18+00:00"
         }
     ],
     "packages-dev": [],

@@ -8,6 +8,11 @@
             "email": "the.moiza@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
     "minimum-stability": "dev",
     "require": {
         "the.moiza/mvc-core": "dev-master"

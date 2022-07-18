@@ -1,0 +1,58 @@
+@import 'reset.scss';
+
+:root{
+	--dark-hue: 0;
+	--dark-sat: 0%;
+	--dark-lig: 3%;
+
+	--light-hue: 0;
+	--light-sat: 0%;
+	--light-lig: 98%;
+
+	--pri-hue: 240;
+	--pri-sat: 48%;
+	--pri-lig: 36%;
+
+	--sec-hue: 160;
+	--sec-sat: 60%;
+	--sec-lig: 20%;
+
+	--danger-hue: 0;
+	--danger-sat: 58%;
+	--danger-lig: 39%;
+
+	--foreground-hue: var(--dark-hue);
+	--foreground-sat: var(--dark-sat);
+	--foreground-lig: var(--dark-lig);
+
+	--background-hue: var(--light-hue);
+	--background-sat: var(--light-sat);
+	--background-lig: var(--light-lig);
+
+}
+
+/* DARK MODE */
+.DarkMode{
+
+	--foreground-hue: var(--light-hue);
+	--foreground-sat: var(--light-sat);
+	--foreground-lig: var(--light-lig);
+
+	--background-hue: var(--dark-hue);
+	--background-sat: var(--dark-sat);
+	--background-lig: var(--dark-lig);
+}
+
+@media (prefers-color-scheme: dark){
+
+	:root{
+
+        --foreground-hue: var(--light-hue);
+        --foreground-sat: var(--light-sat);
+        --foreground-lig: var(--light-lig);
+    
+        --background-hue: var(--dark-hue);
+        --background-sat: var(--dark-sat);
+        --background-lig: var(--dark-lig);
+	}
+}
