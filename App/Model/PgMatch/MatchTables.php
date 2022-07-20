@@ -4,7 +4,9 @@ namespace App\Model\PgMatch;
 
 use App\Model\Connection\Pgsql;
 
-class MatchTables{
+use App\Model\PgMatch\MatchColumns;
+
+class MatchTables extends MatchColumns{
 
 	public $pdoOrigin;
 
@@ -13,7 +15,9 @@ class MatchTables{
 	public $source = [];
 	public $target = [];
 
-	public $tables = [];
+	public $sourceTables = [];
+
+	public $targetTables = [];
 
 	public $threshold = 11;
 
@@ -31,7 +35,11 @@ class MatchTables{
 
 		$Pgsql = new Pgsql;
 		$this->pdoOrigin = $Pgsql->connect($source);
+		$Pgsql = null;
+
+		$Pgsql = new Pgsql;
 		$this->pdoTarget = $Pgsql->connect($target);
+		$Pgsql = null;
 	}
 
 	public function setThreshold(float $threshold) :void{
@@ -66,39 +74,23 @@ class MatchTables{
 		return $string;
 	}
 
-	protected function _getColumns(object $conn, string $table) :void{
+	protected function _getColumns(object $conn, string $table, string $direction) :void{
 
 		$columns = [];
-		if(!isset($this->tables[$table])){
+		if(!isset($this->sourceTables[$table]) and !isset($this->targetTables[$table])){
 
 			$query = $conn->pdo->prepare(
 				"SELECT 
 					cols.column_name AS field,
 					cols.data_type AS type,
 					cols.is_nullable AS null,
-					'' AS key,
 					cols.column_default AS default,
-					'' AS extra,
 					cols.character_maximum_length AS column_size,
 					cols.numeric_precision,
-					cols.numeric_scale,
-					(
-						SELECT
-							pgd.description
-						FROM pg_catalog.pg_statio_all_tables as st
-						INNER JOIN pg_catalog.pg_description pgd on (pgd.objoid = st.relid)
-						INNER JOIN information_schema.columns c on (
-							pgd.objsubid = c.ordinal_position and
-							c.table_schema = st.schemaname and
-							c.table_name = st.relname and
-							c.table_name = cols.table_name and
-							c.table_schema = 'public'
-						)
-						WHERE c.column_name = cols.column_name LIMIT 1
-					) as column_comment
+					cols.numeric_scale
 				FROM information_schema.columns as cols
 				WHERE cols.table_name = :table_name
-				ORDER BY cols.ordinal_position");
+				ORDER BY cols.data_type asc, cols.column_name ASC");
 
 			$query->bindParam(':table_name', $table);
 			$query->execute();
@@ -116,13 +108,21 @@ class MatchTables{
 				$columns[$this->_orderString($b->field)] = $b->type/*.'|'.$nullable*/;
 			}
 
-			$this->tables[$table] = $columns;
+			if($direction == 'source'){
+
+				$this->sourceTables[$table] = $columns;
+			}
+
+			if($direction == 'target'){
+
+				$this->targetTables[$table] = $columns;
+			}
 		}
 	}
 
 	protected function _getBestMatch(string $tableToCompare, array $target) :array{
 
-		$first = $this->tables[$tableToCompare] ?? [];
+		$first = $this->sourceTables[$tableToCompare] ?? [];
 
 		$this->points = 0;
 		$this->best = '?';
@@ -135,16 +135,9 @@ class MatchTables{
 			$thisPoints = $thisPoints + pow(($percent / 10), $this->tableNameWeight);
 
 			// Columns Count Weight
-			$second = $this->tables[$table] ?? [];
-			if(count($first) == count($second)){
+			$second = $this->targetTables[$table] ?? [];
+			$thisPoints = $thisPoints + $this->_getColumnsMatch($first, $second);
 
-				$thisPoints = $thisPoints + 100;
-			}else{
-
-				$pow = pow(abs(count($first) - count($second)), $this->columnsCountWeight);
-
-				$thisPoints = $thisPoints - pow($pow, $this->columnsCountWeight);
-			}
 
 			// Column Similar Weight
 			$table1 = implode('-', $first).'-'.$tableToCompare;
@@ -171,12 +164,12 @@ class MatchTables{
 
 		foreach($this->source as $table){
 
-			$this->_getColumns($this->pdoOrigin, $table);
+			$this->_getColumns($this->pdoOrigin, $table, 'source');
 		}
 
 		foreach($this->target as $table){
 
-			$this->_getColumns($this->pdoTarget, $table);
+			$this->_getColumns($this->pdoTarget, $table, 'target');
 		}
 	}
 
